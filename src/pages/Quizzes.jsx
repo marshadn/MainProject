@@ -5,13 +5,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Clock, ArrowRight, Trophy, BookOpen, Layers, FileBarChart, Webhook } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+
 function QuizCard({ title, icon, description, questions, time, difficulty }) {
   const navigate = useNavigate();
   
+ 
   const handleStartQuiz = () => {
-    const formattedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "-"); // Format title for URL
-    navigate(`/quiz/${formattedTitle}`);
+    const formattedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "-");
+    navigate(`/quizzes/${formattedTitle}`, { state: { topic: title } });
   };
+  
+  
 
   return (
     <Card className="overflow-hidden">
