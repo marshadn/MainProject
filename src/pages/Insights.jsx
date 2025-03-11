@@ -15,6 +15,9 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../components/ui/Dialog";
+import { Input } from "../components/ui/Input";
+import { generateGeminiResponse } from "../lib/GeminiAI"; // API Call
 
 export default function Insights() {
   return (

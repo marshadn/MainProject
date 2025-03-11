@@ -5,6 +5,7 @@ import { Textarea } from "../components/ui/Textarea";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/Card";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/Avatar";
 import { Send, Bot, Lightbulb, Bookmark } from "lucide-react";
+import { generateGeminiResponse } from "../lib/GeminiAI";
 
 function AskAI() {
   const [messages, setMessages] = useState([
@@ -16,38 +17,57 @@ function AskAI() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
-
+  
     const userMessage = {
       role: "user",
       content: input,
     };
-
+  
     setMessages([...messages, userMessage]);
     setInput("");
     setIsLoading(true);
-
-    setTimeout(() => {
-      const aiResponses = [
-        "For technical interviews, I recommend focusing on data structures, algorithms, and system design...",
-        "When negotiating salary, research the market rate for your position and location...",
-        "To stand out in your resume, quantify your achievements with specific metrics...",
-        "Common behavioral interview questions include 'Tell me about a time you faced a challenge'...",
-      ];
-
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-
-      const aiMessage = {
-        role: "assistant",
-        content: randomResponse,
-      };
-
-      setMessages((prevMessages) => [...prevMessages, aiMessage]);
+  
+    try {
+      const aiResponse = await generateGeminiResponse(input);
+  
+      const formattedResponse = aiResponse
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Bold text
+        .replace(/\n- /g, "<br />• ") // Convert bullet points
+        .replace(/\n/g, "<br />"); // Preserve line breaks
+  
+      let index = 0;
       setIsLoading(false);
-    }, 1500);
+  
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { role: "assistant", content: "" }, // Start empty for typing effect
+      ]);
+  
+      const interval = setInterval(() => {
+        if (index < formattedResponse.length) {
+          setMessages((prevMessages) => {
+            let lastMessage = prevMessages[prevMessages.length - 1];
+            let newMessages = [...prevMessages.slice(0, -1), { ...lastMessage, content: formattedResponse.slice(0, index + 1) }];
+            return newMessages;
+          });
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 5); // Adjust speed here
+  
+    } catch (error) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { role: "assistant", content: "An error occurred. Please try again later." },
+      ]);
+      setIsLoading(false);
+    }
   };
+  
+
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -70,48 +90,68 @@ function AskAI() {
               </div>
 
               <Card className="flex-1 flex flex-col">
-                <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {messages.map((message, index) => (
-                    <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className={`flex gap-3 max-w-[80%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                        <Avatar className="h-8 w-8">
-                          {message.role === "user" ? (
-                            <>
-                              <AvatarFallback>U</AvatarFallback>
-                              <AvatarImage src="/placeholder.svg" />
-                            </>
-                          ) : (
-                            <>
-                              <AvatarFallback>AI</AvatarFallback>
-                              <AvatarImage src="/placeholder.svg" />
-                            </>
-                          )}
-                        </Avatar>
-                        <div className={`rounded-lg px-4 py-2 ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
-                          <p className="text-sm">{message.content}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+  {messages.map((message, index) => (
+    <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+      <div 
+        className={`flex gap-3 max-w-[80%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+      >
+        <Avatar className="h-8 w-8">
+          {message.role === "user" ? (
+            <>
+              <AvatarFallback>U</AvatarFallback>
+              <AvatarImage src="/placeholder.svg" />
+            </>
+          ) : (
+            <>
+              <AvatarFallback>AI</AvatarFallback>
+              <AvatarImage src="/placeholder.svg" />
+            </>
+          )}
+        </Avatar>
 
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="flex gap-3 max-w-[80%]">
-                        <Avatar className="h-8 w-8">
-                          <AvatarFallback>AI</AvatarFallback>
-                          <AvatarImage src="/placeholder.svg" />
-                        </Avatar>
-                        <div className="rounded-lg px-4 py-2 bg-muted">
-                          <div className="flex space-x-2">
-                            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"></div>
-                            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.4s" }}></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
+       
+        <div 
+  className={`rounded-lg px-4 py-2 text-sm ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+  style={{ 
+    maxWidth: "100%",  
+    maxHeight: "150px",  
+    overflowY: "auto",  
+    wordBreak: "break-word",  
+    overflowWrap: "break-word",  
+    whiteSpace: "pre-wrap",  
+    scrollbarWidth: "none", /* Firefox */
+    msOverflowStyle: "none", /* IE */
+  }}
+>
+  <div className="hide-scrollbar" dangerouslySetInnerHTML={{ __html: message.content }} />
+</div>
+
+      </div>
+    </div>
+  ))}
+
+ 
+  {isLoading && (
+    <div className="flex justify-start">
+      <div className="flex gap-3 max-w-[80%]">
+        <Avatar className="h-8 w-8">
+          <AvatarFallback>AI</AvatarFallback>
+          <AvatarImage src="/placeholder.svg" />
+        </Avatar>
+        <div className="rounded-lg px-4 py-2 bg-muted">
+          <div className="flex space-x-2">
+            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"></div>
+            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+            <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</CardContent>
+
+
 
                 <CardFooter className="p-4 pt-0">
                   <div className="flex w-full gap-2">
