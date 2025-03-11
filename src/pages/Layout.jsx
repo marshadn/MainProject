@@ -42,7 +42,7 @@ function MainNav() {
           to="/resume"
           className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
-          Resume Builder
+          Resume Analyzer
         </Link>
         <Link
           to="/quizzes"
