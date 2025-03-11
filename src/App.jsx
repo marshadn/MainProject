@@ -7,6 +7,7 @@ import Quizzes from "./pages/Quizzes";
 import HomePage from "./pages/Home";
 import Layout from "./pages/Layout"
 import ResumePage from "./pages/ResumePage";
+import MyInterview from "./pages/MyInterview";
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/mock-interview" element={<MockInterview />} />
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/resume" element={<ResumePage />} />
+        <Route path="/interview/:topic" element={<MyInterview />} />
       </Routes>
       </Layout>
     </Router>

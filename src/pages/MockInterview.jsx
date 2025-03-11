@@ -10,7 +10,7 @@ function InterviewCard({ title, description, icon, level, time }) {
 
   const handleStartInterview = () => {
     const encodedTitle = encodeURIComponent(title); // Encode the topic for URL safety
-    navigate(`/mock-interview/${encodedTitle}`);
+    navigate(`/interview/${encodedTitle}`);
   };
 
   return (
