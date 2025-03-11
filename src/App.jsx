@@ -8,6 +8,7 @@ import HomePage from "./pages/Home";
 import Layout from "./pages/Layout"
 import ResumePage from "./pages/ResumePage";
 import MyInterview from "./pages/MyInterview";
+import QuizPage from "./pages/QuizPage";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/interview/:topic" element={<MyInterview />} />
+        <Route path="/quizzes/:topic" element={<QuizPage />} />
       </Routes>
       </Layout>
     </Router>
