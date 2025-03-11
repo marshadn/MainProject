@@ -3,12 +3,11 @@ import { Button } from "../components/ui/button"; // Ensure correct path
 import { ChevronRight, CheckCircle, FileText, BrainCircuit, BarChart3, MessageSquare, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Model from "./Model";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen ">
       {/* Hero Section */}
-      <Model/>
+   
       <section className=" w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">

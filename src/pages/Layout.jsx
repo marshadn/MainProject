@@ -26,6 +26,12 @@ function MainNav() {
         <span className="hidden font-bold sm:inline-block">Interview.ai</span>
       </Link>
       <nav className="hidden gap-6 md:flex border-none shadow-none">
+      <Link
+          to="/"
+          className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        >
+          Home
+        </Link>
         <Link
           to="/mock-interview"
           className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
