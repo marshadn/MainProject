@@ -23,7 +23,7 @@ function MainNav() {
     <div className="flex items-center gap-6 md:gap-10 border-none shadow-none">
       <Link to="/" className="flex items-center space-x-2">
         <BrainCircuit className="h-6 w-6 text-primary" />
-        <span className="hidden font-bold sm:inline-block">AiCareerPrep</span>
+        <span className="hidden font-bold sm:inline-block">AICareerPrep</span>
       </Link>
       <nav className="hidden gap-6 md:flex border-none shadow-none">
       <Link
@@ -75,7 +75,7 @@ function Footer() {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           <BrainCircuit className="h-6 w-6 text-primary" />
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 AiCareerPrep All rights reserved.
+            © 2025 AICareerPrep All rights reserved.
           </p>
         </div>
         <div className="flex gap-4">
