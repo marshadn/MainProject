@@ -1,4 +1,5 @@
-# Mock Interview Platform
+# Mock Interview Platform [Demo Site](https://aicareerprep.netlify.app)
+
 
 ## 🚀 Overview
 The **Mock Interview Platform** is a comprehensive web application designed to help users prepare for job interviews effectively. It provides AI-powered mock interviews, resume analysis, industry insights, and technical quizzes to enhance job readiness.
