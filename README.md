@@ -1,4 +1,5 @@
-# Mock Interview Platform [Demo Site](https://aicareerprep.netlify.app)
+# AI Career Prep
+
 
 
 ## 🚀 Overview
@@ -78,4 +79,4 @@ This project is licensed under the MIT License.
 ---
 🚀 **Level up your interview preparation with AI-powered insights!**
 
-
+## [Demo Site](https://aicareerprep.vercel.app/)
