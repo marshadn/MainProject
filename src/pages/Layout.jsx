@@ -2,10 +2,10 @@ import React from "react";
 import "./styles.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { Link } from "react-router-dom"; // Keep only Link
-import { Button } from "../components/ui/button";
+import { Button } from "../components/ui/Button";
 import { ModeToggle } from "../components/mode-toggle";
 import { Home, FileText, BrainCircuit, BarChart3, MessageSquare, User, Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "../components/ui/Sheet";
 
 function MobileNavItem({ href, icon, title }) {
   return (

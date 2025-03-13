@@ -331,7 +331,7 @@
 // }
 import React, { useState } from "react";
 import { generateGeminiResponse } from "@/lib/Model3";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 function ResumePage() {
   const [resumeText, setResumeText] = useState("");

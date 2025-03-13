@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { generateGeminiResponse } from "@/lib/Model3";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion"; // For animation
 
 function QuizPage() {

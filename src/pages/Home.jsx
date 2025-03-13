@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "../components/ui/button"; // Ensure correct path
+import { Button } from "../components/ui/Button"; // Ensure correct path
 import { ChevronRight, CheckCircle, FileText, BrainCircuit, BarChart3, MessageSquare, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";

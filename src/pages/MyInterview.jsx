@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { generateGeminiResponse } from "@/lib/Model2";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 const MyInterview = () => {
