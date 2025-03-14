@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/ui/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/Card";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { GripVertical } from "lucide-react";
 

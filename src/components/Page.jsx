@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import ResumeForm from "../components/ResumeForm";
 import ResumePreview from "../components/ResumePreview";
 import ResumeSettings from "../components/ResumeSettings";
