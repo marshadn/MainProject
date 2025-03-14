@@ -3,18 +3,28 @@ import { Button } from "../components/ui/Button"; // Ensure correct path
 import { ChevronRight, CheckCircle, FileText, BrainCircuit, BarChart3, MessageSquare, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import ResumeForm from "../components/ResumeForm";
+import ResumePreview from "../components/ResumePreview";
+import ResumeSettings from "../components/ResumeSettings";
+import Page from "../components/Page";
 export default function Home() {
+ 
+  const [resumeData, setResumeData] = useState({
+    personalInfo: {},
+    experience: [],
+    projects: [],
+    education: [], // ✅ Add education to prevent undefined errors
+  });
   return (
     <div className="flex flex-col min-h-screen ">
-      {/* Hero Section */}
-   
-      <section className=" w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
+     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl text-primary">
                 Ace Your Next Interview
               </h1>
+
               <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
                 Prepare for success with interactive mock interviews, resume analysis, and personalized feedback.
               </p>
@@ -41,6 +51,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
 
       {/* Features Section */}
       <section className="w-full py-12 md:py-24 lg:py-32">
@@ -205,11 +216,16 @@ function TestimonialCard({ name, company, quote, image }) {
 function FeatureCard({ icon, title, description, link }) {
   return (
     <Link to={link} className="block">
-      <div className="flex flex-col items-center rounded-lg border bg-white p-6 text-center shadow-sm hover:shadow-md transition-all shadow-sm dark:border-gray-800 dark:bg-gray-950">
-        <div className="h-20 w-20 flex items-center justify-center bg-primary/10 rounded-full">{icon}</div>
-        <h3 className="mt-4 text-xl font-semibold">{title}</h3>
-        <p className="mt-2 text-sm text-gray-500">{description}</p>
-        
+      <div className="flex flex-col items-center rounded-lg border bg-lightCard dark:bg-darkCard p-6 text-center shadow-sm hover:shadow-md transition-all dark:border-gray-800">
+        <div className="h-20 w-20 flex items-center justify-center bg-primary/10 rounded-full">
+          {icon}
+        </div>
+        <h3 className="mt-4 text-xl font-semibold text-lightText dark:text-darkText">
+          {title}
+        </h3>
+        <p className="mt-2 text-sm text-lightSecondary dark:text-darkSecondary">
+          {description}
+        </p>
       </div>
     </Link>
   );
