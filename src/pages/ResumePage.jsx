@@ -4,11 +4,11 @@ import { FileUp, CheckCircle, AlertCircle, Download } from 'lucide-react';
 
 // Note: You'd need to implement or import these UI components from a library like shadcn/ui
 // I'm keeping the component imports as-is, assuming you'll handle the implementation
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
+import { Button } from "../components/ui/Button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/Card";
 import Progress from "../components/ui/Progress"; // ✅ Correct for default export
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 import Page from '../components/Page';
 import ResumeMatch from '../components/ResumeMatch';
 console.log("ResumePage Loaded");
