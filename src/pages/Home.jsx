@@ -1,14 +1,35 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button"; // Ensure correct path
 import { ChevronRight, CheckCircle, FileText, BrainCircuit, BarChart3, MessageSquare, Plus } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import ResumeForm from "../components/ResumeForm";
-import ResumePreview from "../components/ResumePreview";
-import ResumeSettings from "../components/ResumeSettings";
-import Page from "../components/Page";
+import { motion,AnimatePresence } from "framer-motion";
+import {useState ,useEffect } from "react";
+import { Typewriter } from "react-simple-typewriter";
+const images = ["/res2.svg","/resume.svg","/int3.svg","/int5.svg","/int6.svg"];
 export default function Home() {
- 
+  const words = ["confidently.", "effortlessly.", "like a pro."]; // Words to cycle through
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 2000); // Change word every 2 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+
+  const [indexx, setIndexx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndexx((prevIndexx) => {
+        console.log("Current image:", images[(prevIndexx + 1) % images.length]);
+        return (prevIndexx + 1) % images.length;
+      });
+    }, 5000); 
+    return () => clearInterval(interval);
+  }, []);
+
+
   const [resumeData, setResumeData] = useState({
     personalInfo: {},
     experience: [],
@@ -21,13 +42,41 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl text-primary">
-                Ace Your Next Interview
-              </h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }} // Start invisible & slightly below
+        animate={{ opacity: 1, y: 0 }} // Fade in & move up
+        transition={{ duration: 0.8, ease: "easeOut" }} // Smooth animation
+        className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl text-primary"
+      >
+        Ace Your Next Interview{" "}
+        <motion.span
+  key={index}
+  initial={{ opacity: 0, y: 30 }} // Starts lower for more effect
+  animate={{ opacity: 1, y: 0 }} // Moves up naturally
+  exit={{ opacity: 0, y: 30 }} // Moves down before disappearing
+  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+  className="text-blue-500"
+>
+  {words[index]}
+</motion.span>
 
-              <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                Prepare for success with interactive mock interviews, resume analysis, and personalized feedback.
-              </p>
+      </motion.h1>
+      <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+  <Typewriter
+    words={[
+      "Prepare for success with AI-Powered mock interviews that  helping you stay confident and composed.",
+      "Get resume analysis and personalized feedback tailored to your strengths and areas for improvement, ensuring you stand out to recruiters.",
+      "Boost your confidence with our expert guidance, structured coaching, and actionable insights to help you ace your next big opportunity."
+    ]}
+    loop={true}
+    cursor
+    cursorStyle="|"
+    typeSpeed={40} // Normal typing speed
+    deleteSpeed={10} // Much faster deletion
+    delaySpeed={800} // Shorter pause before typing next sentence
+  />
+</p>
+
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button size="lg" className="gap-1">
                   <Link to="/mock-interview" className="flex items-center">
@@ -39,15 +88,22 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[500px] aspect-video rounded-xl overflow-hidden shadow-xl">
-                <img
-                  src="/placeholder.svg"
-                  alt="Interview preparation dashboard"
-                  className="object-cover w-full h-full"
-                />
-              </div>
+            <div className="flex justify-center items-center">
+            <div className="relative w-full max-w-[500px] h-[340px] overflow-hidden rounded-xl shadow-xl">
+  <motion.img
+    key={images[indexx]}
+    src={images[indexx]}
+    alt="Interview preparation"
+    className="absolute object-cover w-full h-full rounded-xl"
+    initial={{ x: "100%" }} // Start offscreen (right)
+    animate={{ x: 0 }} // Move to center
+    exit={{ x: "-100%" }} // Move offscreen (left)
+    transition={{ duration: 1.2, ease: "easeInOut" }} // Smooth effect
+  />
+</div>
+
             </div>
+
           </div>
         </div>
       </section>
