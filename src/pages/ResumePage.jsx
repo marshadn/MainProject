@@ -14,10 +14,10 @@ import ResumeMatch from '../components/ResumeMatch';
 console.log("ResumePage Loaded");
 export default function ResumePage() {
   const navigate = useNavigate(); // React Router hook instead of Next.js useRouter
-  const handleStartBuildingClick = () => {
-    window.location.href = "https://resumebuildrr.netlify.app/";
-  };
-  
+const handleStartBuildingClick = () => {
+  window.location.href = "https://resumebuildrr.netlify.app/";
+};
+
 
   return (
     <div className="container py-10">
