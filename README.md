@@ -30,7 +30,7 @@ mock-interview-platform/
 ├── public/               # Static assets
 ├── src/
 │   ├── api/
-│   │   ├── generate-questions.jsx  # Handles AI-generated interview questions
+│   │   ├── Model.js  # Handles AI-generated interview questions
 │   ├── app/
 │   │   ├── ask-ai/
 │   │   ├── insights/
@@ -53,8 +53,8 @@ Ensure you have the following installed:
 
 ### **Installation**
 ```bash
-git clone https://github.com/your-username/mock-interview-platform.git
-cd mock-interview-platform
+git clone https://github.com/marshadn/MainProject.git
+cd MainProject 
 npm install   # or yarn install
 ```
 
@@ -79,4 +79,4 @@ This project is licensed under the MIT License.
 ---
 🚀 **Level up your interview preparation with AI-powered insights!**
 
-## [Demo Site](https://aicareerprep.vercel.app/)
+## [Demo Site](https://aicareerprep.netlify.app/)
