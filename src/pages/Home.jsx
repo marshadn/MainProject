@@ -8,6 +8,12 @@ import {
   BarChart3,
   MessageSquare,
   Plus,
+  Mic,
+  FileSearch,
+  Cpu,
+  Star,
+  TrendingUp,
+  Smartphone,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -20,7 +26,6 @@ const images = [
   "/int5.svg",
   "/int6.svg",
 ];
-
 export default function Home() {
   const words = ["confidently.", "effortlessly.", "like a pro."];
   const [index, setIndex] = useState(0);
@@ -204,7 +209,8 @@ export default function Home() {
         </div>
       </section>
 
-      <TestimonialsSection />
+      {/* Features Showcase Section (Replacing Testimonials) */}
+      <FeaturesShowcase />
     </div>
   );
 }
@@ -238,20 +244,19 @@ function FeatureCard({ icon, title, description, link, delay = 0 }) {
   );
 }
 
-// Enhanced TestimonialsSection with 3D card effect
-function TestimonialsSection() {
-  const [isHovered, setIsHovered] = useState(false);
-  const testimonialsRef = useRef(null);
+// Features Showcase Section (Replacing Testimonials)
+function FeaturesShowcase() {
+  const showcaseRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: testimonialsRef,
+    target: showcaseRef,
     offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
-    <div ref={testimonialsRef}>
-      {/* Testimonials Section */}
+    <div ref={showcaseRef}>
+      {/* Features Showcase Section */}
       <section className="relative w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900 overflow-hidden">
         <motion.div className="absolute inset-0 -z-10" style={{ y }}>
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5 dark:opacity-10"></div>
@@ -264,41 +269,29 @@ function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary"
+            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary mb-4"
           >
-            Success Stories
+            Key Features
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-[900px] mx-auto text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400"
+            className="max-w-[900px] mx-auto text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400 mb-12"
           >
-            See how our platform has helped candidates land their dream jobs.
+            Discover how our platform helps you prepare for interviews and land
+            your dream job
           </motion.p>
         </div>
 
-        {/* Enhanced Scrolling Testimonials */}
-        <div className="relative w-full mt-12 overflow-hidden py-8">
-          <motion.div
-            className="flex w-max gap-8 px-4"
-            initial={{ x: "10%" }}
-            animate={{ x: isHovered ? "0%" : "-100%" }}
-            transition={{
-              repeat: Infinity,
-              duration: isHovered ? 0 : 25,
-              ease: "linear",
-            }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {[...testimonials, ...testimonials, ...testimonials].map(
-              (testimonial, index) => (
-                <TestimonialCard key={index} {...testimonial} />
-              )
-            )}
-          </motion.div>
+        {/* Features Grid */}
+        <div className="container px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
+            {featureShowcases.map((feature, index) => (
+              <FeatureShowcaseCard key={index} {...feature} index={index} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -353,30 +346,29 @@ function TestimonialsSection() {
   );
 }
 
-// Enhanced TestimonialCard with 3D tilt effect
-function TestimonialCard({ name, company, quote, image }) {
+// Feature Showcase Card Component
+function FeatureShowcaseCard({ title, description, icon, mobileIcon, index }) {
   return (
     <motion.div
-      whileHover={{
-        y: -10,
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      }}
-      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      className="w-72 h-80 flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center shadow-lg dark:border-gray-800 dark:bg-gray-950 hover:shadow-xl transition-all"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.6 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5 }}
+      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg transition-all"
     >
-      <div className="relative h-20 w-20 rounded-full overflow-hidden border-2 border-primary/20">
-        <img
-          src="/placeholder.svg"
-          alt="User"
-          className="object-cover rounded-full w-full h-full"
-        />
+      <div className="flex items-center gap-4 mb-4">
+        <div className="hidden md:block p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+          {icon}
+        </div>
+        <div className="md:hidden p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+          {mobileIcon}
+        </div>
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+          {title}
+        </h3>
       </div>
-      <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-400">
-        "{quote}"
-      </p>
-      <h4 className="mt-4 text-base font-semibold">{name}</h4>
-      <p className="text-xs text-gray-500 dark:text-gray-400">{company}</p>
+      <p className="text-gray-600 dark:text-gray-300">{description}</p>
     </motion.div>
   );
 }
@@ -420,40 +412,59 @@ const features = [
   },
 ];
 
-const testimonials = [
+const featureShowcases = [
   {
-    name: "Sarah Johnson",
-    company: "Software Engineer at Google",
-    quote:
-      "The mock interviews were incredibly realistic. I felt prepared for every question in my actual interviews.",
-    image: "/placeholder.svg",
+    title: "AI-Powered Mock Interviews",
+    description:
+      "Practice with our realistic AI interviewer that adapts to your responses and provides detailed feedback on your performance.",
+    icon: (
+      <MessageSquare className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+    ),
+    mobileIcon: (
+      <MessageSquare className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+    ),
   },
   {
-    name: "David Chen",
-    company: "Product Manager at Amazon",
-    quote:
-      "The resume analysis helped me highlight the right skills. I received multiple interview calls after the revisions.",
-    image: "/placeholder.svg",
+    title: "Resume Optimization",
+    description:
+      "Get your resume analyzed by our AI to identify strengths and weaknesses with specific improvement suggestions.",
+    icon: <FileText className="h-8 w-8 text-blue-600 dark:text-blue-400" />,
+    mobileIcon: (
+      <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+    ),
   },
   {
-    name: "Priya Sharma",
-    company: "Data Scientist at Microsoft",
-    quote:
-      "The technical quizzes helped me identify my weak areas and focus my preparation. Highly recommended!",
-    image: "/placeholder.svg",
+    title: "Technical Question Bank",
+    description:
+      "Access thousands of interview questions categorized by company, role, and difficulty level.",
+    icon: <BrainCircuit className="h-8 w-8 text-blue-600 dark:text-blue-400" />,
+    mobileIcon: (
+      <BrainCircuit className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+    ),
   },
   {
-    name: "Michael Rodriguez",
-    company: "UX Designer at Apple",
-    quote:
-      "The AI assistant answered all my career questions instantly. Saved me hours of research!",
-    image: "/placeholder.svg",
+    title: "Behavioral Interview Prep",
+    description:
+      "Master the STAR method and common behavioral questions with our guided practice sessions.",
+    icon: <BarChart3 className="h-8 w-8 text-blue-600 dark:text-blue-400" />,
+    mobileIcon: (
+      <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+    ),
   },
   {
-    name: "Emily Wilson",
-    company: "Marketing Specialist at Netflix",
-    quote:
-      "The industry insights helped me tailor my skills to exactly what employers were looking for.",
-    image: "/placeholder.svg",
+    title: "Performance Analytics",
+    description:
+      "Track your progress over time with detailed metrics and personalized improvement recommendations.",
+    icon: <CheckCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />,
+    mobileIcon: (
+      <CheckCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+    ),
+  },
+  {
+    title: "Mobile-Friendly Practice",
+    description:
+      "Prepare anytime, anywhere with our mobile-optimized platform that works across all devices.",
+    icon: <Plus className="h-8 w-8 text-blue-600 dark:text-blue-400" />,
+    mobileIcon: <Plus className="h-6 w-6 text-blue-600 dark:text-blue-400" />,
   },
 ];
