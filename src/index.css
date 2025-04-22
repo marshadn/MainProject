@@ -4,9 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
@@ -144,20 +141,31 @@ body {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
+
 @layer base {
   * {
     @apply outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button, a {
-    @apply cursor-pointer transition-all duration-500 ease-in-out;
+    @apply cursor-pointer transition-all duration-500 ease-in-out relative;
   }
 
   button:hover, a:hover {
     @apply opacity-90 scale-105 shadow-xl;
   }
-  
-}
 
+  /* Icon/Arrow styles */
+  .icon {
+    @apply absolute opacity-0 translate-x-4 transition-all duration-500 ease-in-out;
+  }
+
+  button:hover .icon, a:hover .icon {
+    @apply opacity-100 translate-x-0; /* Icon fades in and slides into position */
+  }
+}

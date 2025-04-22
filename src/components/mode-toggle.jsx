@@ -1,10 +1,9 @@
 import React from "react";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "./ThemeProvider";
 import { Sun, Moon } from "lucide-react"; // Modern icon set
 
 export function ModeToggle() {
   const { theme, toggleTheme } = useTheme();
-
 
   return (
     <button
@@ -18,5 +17,4 @@ export function ModeToggle() {
       )}
     </button>
   );
-  
 }
