@@ -1,69 +1,106 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // React Router instead of Next.js router
-import { FileUp, CheckCircle, AlertCircle, Download } from 'lucide-react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FileUp,
+  CheckCircle,
+  AlertCircle,
+  Download,
+  ClipboardList,
+} from "lucide-react";
 
-// Note: You'd need to implement or import these UI components from a library like shadcn/ui
-// I'm keeping the component imports as-is, assuming you'll handle the implementation
 import { Button } from "../components/ui/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/Card";
-import Progress from "../components/ui/Progress"; // ✅ Correct for default export
+import { Label } from "../components/ui/Label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
+import Progress from "../components/ui/Progress";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../components/ui/Tabs";
+import Page from "../components/Page";
+import ResumeMatch from "../components/ResumeMatch";
+import { generateGeminiResponse } from "../lib/GeminiAI";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
-import Page from '../components/Page';
-import ResumeMatch from '../components/ResumeMatch';
 console.log("ResumePage Loaded");
-export default function ResumePage() {
-  const navigate = useNavigate(); // React Router hook instead of Next.js useRouter
-const handleStartBuildingClick = () => {
-  window.location.href = "https://resumebuildrr.netlify.app/";
-};
 
+export default function ResumePage() {
+  const navigate = useNavigate();
+  const [jobDescription, setJobDescription] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
+  const [generatedQuestions, setGeneratedQuestions] = useState([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleStartBuildingClick = () => {
+    window.location.href = "https://resumebuildrr.netlify.app/";
+  };
+
+  // Function to call Gemini API and generate questions
+  const callGeminiApi = async (jobDesc, expLevel) => {
+    try {
+      setIsGenerating(true);
+
+      // Construct the prompt
+      let prompt = "Generate 5-7 interview questions based on:\n\n";
+      if (jobDesc) prompt += `Job Description: ${jobDesc}\n\n`;
+      prompt += `Experience Level: ${expLevel || "Not specified"}\n\n`;
+      prompt += "Format the response as a numbered list of questions only.";
+
+      const content = await generateGeminiResponse(prompt);
+      const questionLines = content
+        .split(/\d+\.\s+/)
+        .filter((line) => line.trim().length > 0)
+        .map((line) => line.trim());
+
+      setGeneratedQuestions(questionLines);
+    } catch (error) {
+      console.error("Error calling Gemini API:", error);
+      setGeneratedQuestions([
+        "Error generating questions. Please try again later.",
+      ]);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+  // Handler for both Generate Questions buttons
+  const handleGenerateQuestionsClick = () => {
+    callGeminiApi(jobDescription, experienceLevel);
+  };
 
   return (
     <div className="container py-10">
       <h1 className="text-3xl font-bold mb-6">Resume Builder & Analysis</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-3xl">
-        Upload your resume for AI-powered analysis or build a new one from scratch. Get actionable suggestions to
-        improve your resume and make it stand out.
+        Upload your resume for AI-powered analysis or build a new one from
+        scratch. Get actionable suggestions to improve your resume and make it
+        stand out.
       </p>
-<Page/>
-<ResumeMatch/>
-      <Tabs defaultValue="analysis" className="w-full">
-        <TabsList className="mb-8">
-          <TabsTrigger value="analysis">Resume Analysis</TabsTrigger>
-          <TabsTrigger value="builder">Resume Builder</TabsTrigger>
-        </TabsList>
 
-        <TabsContent value="analysis">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1">
-              <ResumeUploader />
-            </div>
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold mb-6">Resume Analysis Results</h2>
-              <div className="space-y-6">
-                <OverallScore score={72} />
-                <SectionAnalysis />
-                <KeywordAnalysis />
-                <RecommendedActions />
-              </div>
-            </div>
-          </div>
-        </TabsContent>
+      {/* First Section (already okay) */}
+      <Page />
+
+      {/* Second Section - Resume Builder */}
+      <Tabs defaultValue="builder" className="w-full mb-12">
+        <TabsList className="mb-8"></TabsList>
 
         <TabsContent value="builder">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-2xl font-bold mb-6">Resume Builder</h2>
               <p className="text-gray-500 dark:text-gray-400 mb-6">
-                Create a professional resume using our guided builder. Choose from multiple templates and customize
-                sections.
+                Create a professional resume using our guided builder. Choose
+                from multiple templates and customize sections.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <Card className="cursor-pointer border-2 border-primary">
                   <CardContent className="p-4">
                     <div className="aspect-[8.5/11] relative">
-                      {/* Using img instead of Next.js Image component */}
                       <img
                         src="/placeholder.svg"
                         alt="Professional template"
@@ -73,10 +110,9 @@ const handleStartBuildingClick = () => {
                     <p className="text-center mt-2 font-medium">Professional</p>
                   </CardContent>
                 </Card>
-                <Card className="cursor-pointer">
+                <Card className="cursor-pointer border-primary">
                   <CardContent className="p-4">
                     <div className="aspect-[8.5/11] relative">
-                      {/* Using img instead of Next.js Image component */}
                       <img
                         src="/placeholder.svg"
                         alt="Modern template"
@@ -87,17 +123,22 @@ const handleStartBuildingClick = () => {
                   </CardContent>
                 </Card>
               </div>
-              <Button onClick={handleStartBuildingClick} className="w-full">Start Building</Button>
+              <Button onClick={handleStartBuildingClick} className="w-full">
+                Start Building
+              </Button>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
-              <h3 className="font-semibold text-xl mb-4">Resume Building Tips</h3>
+              <h3 className="font-semibold text-xl mb-4">
+                Resume Building Tips
+              </h3>
               <ul className="space-y-4">
                 <li className="flex gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium">Tailor your resume to the job</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Customize your resume for each position to highlight relevant skills and experience.
+                      Customize your resume for each position to highlight
+                      relevant skills and experience.
                     </p>
                   </div>
                 </li>
@@ -106,7 +147,8 @@ const handleStartBuildingClick = () => {
                   <div>
                     <p className="font-medium">Use action verbs</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Begin bullet points with strong action verbs like "Implemented," "Developed," or "Managed."
+                      Begin bullet points with strong action verbs like
+                      "Implemented," "Developed," or "Managed."
                     </p>
                   </div>
                 </li>
@@ -115,7 +157,8 @@ const handleStartBuildingClick = () => {
                   <div>
                     <p className="font-medium">Quantify achievements</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Include specific numbers and metrics to demonstrate your impact.
+                      Include specific numbers and metrics to demonstrate your
+                      impact.
                     </p>
                   </div>
                 </li>
@@ -124,7 +167,8 @@ const handleStartBuildingClick = () => {
                   <div>
                     <p className="font-medium">Keep it concise</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Aim for a one-page resume unless you have extensive relevant experience.
+                      Aim for a one-page resume unless you have extensive
+                      relevant experience.
                     </p>
                   </div>
                 </li>
@@ -133,7 +177,29 @@ const handleStartBuildingClick = () => {
                   <div>
                     <p className="font-medium">Proofread carefully</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Errors can eliminate you from consideration. Proofread multiple times.
+                      Errors can eliminate you from consideration. Proofread
+                      multiple times.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Highlight relevant experience</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Focus on the most relevant work experience, even if it's
+                      from internships, volunteering, or freelance work.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Choose the right format</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Use a clean and professional format, choosing between
+                      chronological, functional, or hybrid based on your career
+                      stage.
                     </p>
                   </div>
                 </li>
@@ -142,196 +208,136 @@ const handleStartBuildingClick = () => {
           </div>
         </TabsContent>
       </Tabs>
+
+      <ResumeMatch />
+
+      {/* Third Section - Generate Interview Questions */}
+      <div className="w-full mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Card */}
+          <Card className="shadow-xl transition-all transform hover:shadow-2xl border-0 rounded-2xl">
+            <CardHeader className="bg-primary rounded-t-2xl p-6">
+              <CardTitle className="flex items-center gap-2 text-white text-xl font-bold">
+                <ClipboardList className="h-6 w-6" />
+                Generate Interview Questions
+              </CardTitle>
+              <CardDescription className="text-white/90">
+                Get personalized interview questions based on your resume and
+                job description
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-4">
+              <div>
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="job-description"
+                >
+                  Job Description (optional)
+                </label>
+                <textarea
+                  id="job-description"
+                  className="w-full p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:border-blue-300 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-h-[100px]"
+                  placeholder="Paste the job description here to get tailored questions..."
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="experience-level"
+                >
+                  Experience Level
+                </label>
+                <select
+                  id="experience-level"
+                  className="w-full p-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:border-blue-300 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  value={experienceLevel}
+                  onChange={(e) => setExperienceLevel(e.target.value)}
+                >
+                  <option value="">Select your level</option>
+                  <option value="entry">Entry Level</option>
+                  <option value="mid">Mid Career</option>
+                  <option value="senior">Senior Level</option>
+                  <option value="executive">Executive</option>
+                </select>
+              </div>
+
+              {generatedQuestions.length > 0 && (
+                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border-l-4 border-primary hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">
+                  <h4 className="font-semibold mb-3 text-gray-800 dark:text-gray-100">
+                    Generated Interview Questions:
+                  </h4>
+                  <ul className="space-y-2">
+                    {generatedQuestions.map((question, index) => (
+                      <li key={index} className="flex gap-3">
+                        <span className="text-primary font-semibold">
+                          {index + 1}.
+                        </span>
+                        <span className="text-gray-800 dark:text-gray-200">
+                          {question}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </CardContent>
+            <CardFooter className="px-6 pb-6">
+              <Button
+                onClick={handleGenerateQuestionsClick}
+                className="w-full px-6 py-4 text-lg font-semibold rounded bg-primary hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                disabled={isGenerating}
+              >
+                {isGenerating ? "Generating..." : "Generate Questions"}
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Right Tips Box */}
+          <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-blue-100 dark:border-gray-700 shadow-md transition-shadow hover:shadow-xl">
+            <h3 className="font-semibold text-xl mb-4 text-gray-800 dark:text-white">
+              Interview Preparation Tips
+            </h3>
+            <ul className="space-y-4">
+              {[
+                {
+                  title: "Research the company",
+                  desc: "Understand the company's mission, values, and recent news to show your interest.",
+                },
+                {
+                  title: "Practice common questions",
+                  desc: `Prepare answers for "Tell me about yourself", "Why this company?" and similar.`,
+                },
+                {
+                  title: "Prepare your own questions",
+                  desc: "Have thoughtful questions ready to ask the interviewer about the role and company.",
+                },
+                {
+                  title: "Use the STAR method",
+                  desc: "Structure behavioral answers with Situation, Task, Action, and Result.",
+                },
+                {
+                  title: "Dress appropriately",
+                  desc: "Research the company culture to determine the right attire for your interview.",
+                },
+              ].map((tip, i) => (
+                <li key={i} className="flex gap-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-gray-800 dark:text-gray-100">
+                      {tip.title}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {tip.desc}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-
-function ResumeUploader() {
-  return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle>Upload Your Resume</CardTitle>
-        <CardDescription>Upload your resume to get AI-powered analysis and suggestions</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col items-center">
-        <div className="border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-lg p-6 w-full flex flex-col items-center justify-center">
-          <FileUp className="h-10 w-10 text-gray-400 mb-4" />
-          <p className="text-sm text-center mb-2">Drag and drop your PDF or DOCX file here</p>
-          <p className="text-xs text-center text-gray-500 dark:text-gray-400 mb-4">Maximum file size: 5MB</p>
-          <Button variant="outline" size="sm">
-            Browse Files
-          </Button>
-        </div>
-      </CardContent>
-      <CardFooter className="flex-col space-y-2">
-        <Button className="w-full">Analyze Resume</Button>
-        <p className="text-xs text-center text-gray-500 dark:text-gray-400">We support PDF, DOCX, and TXT formats</p>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function OverallScore({ score }) {
-  let scoreColor = "text-yellow-500";
-  let scoreText = "Good";
-
-  if (score >= 90) {
-    scoreColor = "text-green-500";
-    scoreText = "Excellent";
-  } else if (score >= 80) {
-    scoreColor = "text-green-400";
-    scoreText = "Very Good";
-  } else if (score < 60) {
-    scoreColor = "text-red-500";
-    scoreText = "Needs Improvement";
-  }
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex justify-between items-center">
-          <span>Overall Resume Score</span>
-          <span className={`text-2xl ${scoreColor}`}>{score}%</span>
-        </CardTitle>
-        <CardDescription>{scoreText} - Your resume has been evaluated across several key dimensions</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Progress value={score} className="h-2 mb-2" />
-        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-          <span>Needs Work</span>
-          <span>Good</span>
-          <span>Excellent</span>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button variant="outline" className="w-full">
-          <Download className="h-4 w-4 mr-2" />
-          Download Full Report
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function SectionAnalysis() {
-  const sections = [
-    {
-      name: "Professional Summary",
-      score: 85,
-      feedback: "Well-written, but could be more targeted to the specific job",
-    },
-    { name: "Work Experience", score: 70, feedback: "Good structure, but lacks quantifiable achievements" },
-    { name: "Skills", score: 90, feedback: "Excellent match with industry requirements" },
-    { name: "Education", score: 80, feedback: "Well-formatted, relevant coursework included" },
-    { name: "Projects", score: 60, feedback: "Need more details about your role and technologies used" },
-  ];
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Section Analysis</CardTitle>
-        <CardDescription>Performance breakdown by section</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {sections.map((section) => (
-            <div key={section.name}>
-              <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium">{section.name}</span>
-                <span className="text-sm font-medium">{section.score}%</span>
-              </div>
-              <Progress value={section.score} className="h-2 mb-1" />
-              <p className="text-xs text-gray-500 dark:text-gray-400">{section.feedback}</p>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-function KeywordAnalysis() {
-  const keywords = [
-    { name: "JavaScript", present: true },
-    { name: "React", present: true },
-    { name: "Node.js", present: true },
-    { name: "TypeScript", present: false },
-    { name: "API Development", present: true },
-    { name: "AWS", present: false },
-    { name: "CI/CD", present: false },
-    { name: "Agile", present: true },
-  ];
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Keyword Analysis</CardTitle>
-        <CardDescription>Matching your resume with job market requirements</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {keywords.map((keyword) => (
-            <div
-              key={keyword.name}
-              className={`p-2 rounded-md border text-center text-sm ${
-                keyword.present
-                  ? "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800"
-                  : "bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800"
-              }`}
-            >
-              <div className="flex items-center justify-center gap-1">
-                {keyword.present ? (
-                  <CheckCircle className="h-3 w-3 text-green-500" />
-                ) : (
-                  <AlertCircle className="h-3 w-3 text-red-500" />
-                )}
-                <span>{keyword.name}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-          Our AI scanned job descriptions in your target industry and identified these keywords. Consider adding missing
-          keywords to your resume where relevant.
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function RecommendedActions() {
-  const recommendations = [
-    "Add more quantifiable achievements to your work experience section",
-    "Include TypeScript in your skills section if you have experience with it",
-    "Add some AWS experience or certifications if applicable",
-    "Make your bullet points more concise and action-oriented",
-    "Consider adding a projects section to showcase your hands-on experience",
-  ];
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recommended Actions</CardTitle>
-        <CardDescription>Key improvements to make your resume stand out</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="space-y-2">
-          {recommendations.map((recommendation, index) => (
-            <li key={index} className="flex items-start gap-2">
-              <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs text-primary font-medium">{index + 1}</span>
-              </div>
-              <span className="text-sm">{recommendation}</span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full">Apply AI Suggestions</Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-
-
