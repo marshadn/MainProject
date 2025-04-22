@@ -1,28 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { CheckCircle, Clock, ArrowRight, Trophy, BookOpen, Layers, FileBarChart, Webhook } from "lucide-react";
+import {
+  Loader2,
+  CheckCircle,
+  Clock,
+  ArrowRight,
+  Trophy,
+  BookOpen,
+  Layers,
+  FileBarChart,
+  Webhook,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
 
 function QuizCard({ title, icon, description, questions, time, difficulty }) {
   const navigate = useNavigate();
-  
- 
-  const handleStartQuiz = () => {
-    const formattedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "-");
-    navigate(`/quizzes/${formattedTitle}`, { state: { topic: title } });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleStartQuiz = async () => {
+    setLoading(true);
+    try {
+      // simulate loading (replace with actual logic)
+      await new Promise((res) => setTimeout(res, 1500));
+      // Navigate to quiz page with formatted URL
+      const formattedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      navigate(`/quizzes/${formattedTitle}`, { state: { topic: title } });
+    } finally {
+      setLoading(false);
+    }
   };
-  
-  
 
   return (
     <Card className="overflow-hidden">
       <CardHeader>
         <div className="flex items-center justify-between mb-2">
           {icon}
-          <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{difficulty}</span>
+          <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">
+            {difficulty}
+          </span>
         </div>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -40,8 +65,22 @@ function QuizCard({ title, icon, description, questions, time, difficulty }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleStartQuiz} className="w-full gap-1" >
-          Start Quiz <ArrowRight className="h-4 w-4" />
+        <Button
+          onClick={handleStartQuiz}
+          className="w-full gap-2"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Starting...
+            </>
+          ) : (
+            <>
+              Start Quiz
+              <ArrowRight className="h-4 w-4" />
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>
@@ -90,7 +129,10 @@ function SkillBar({ skill, percentage }) {
         <span className="text-sm font-medium">{percentage}%</span>
       </div>
       <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-        <div className={`h-full ${barColor} rounded-full`} style={{ width: `${percentage}%` }}></div>
+        <div
+          className={`h-full ${barColor} rounded-full`}
+          style={{ width: `${percentage}%` }}
+        ></div>
       </div>
     </div>
   );
@@ -101,8 +143,9 @@ function Quizzes() {
     <div className="container py-10">
       <h1 className="text-3xl font-bold mb-6">Placement Quizzes & Analysis</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-3xl">
-        Test your knowledge with our comprehensive quizzes designed for technical and HR rounds. Get detailed analysis
-        of your performance to identify strengths and areas for improvement.
+        Test your knowledge with our comprehensive quizzes designed for
+        technical and HR rounds. Get detailed analysis of your performance to
+        identify strengths and areas for improvement.
       </p>
 
       <Tabs defaultValue="technical" className="w-full">
@@ -200,13 +243,30 @@ function Quizzes() {
           <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>Recent Quiz Results</CardTitle>
-              <CardDescription>View performance trends across different quiz categories</CardDescription>
+              <CardDescription>
+                View performance trends across different quiz categories
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <QuizResult title="JavaScript Fundamentals" score={85} date="1 day ago" improvement="+7%" />
-                <QuizResult title="Data Structures & Algorithms" score={72} date="3 days ago" improvement="+12%" />
-                <QuizResult title="Aptitude & Reasoning" score={90} date="1 week ago" improvement="+5%" />
+                <QuizResult
+                  title="JavaScript Fundamentals"
+                  score={85}
+                  date="1 day ago"
+                  improvement="+7%"
+                />
+                <QuizResult
+                  title="Data Structures & Algorithms"
+                  score={72}
+                  date="3 days ago"
+                  improvement="+12%"
+                />
+                <QuizResult
+                  title="Aptitude & Reasoning"
+                  score={90}
+                  date="1 week ago"
+                  improvement="+5%"
+                />
               </div>
             </CardContent>
             <CardFooter>
@@ -219,7 +279,9 @@ function Quizzes() {
           <Card>
             <CardHeader>
               <CardTitle>Skill Breakdown</CardTitle>
-              <CardDescription>Your strengths and areas for improvement</CardDescription>
+              <CardDescription>
+                Your strengths and areas for improvement
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -244,8 +306,9 @@ function Quizzes() {
           <div className="md:w-1/2">
             <h2 className="text-2xl font-bold mb-3">Practice Makes Perfect</h2>
             <p className="text-gray-500 dark:text-gray-400 mb-4">
-              Our quizzes are designed to simulate actual placement tests. Regular practice will improve your speed,
-              accuracy, and confidence. Start with topics where you need the most improvement.
+              Our quizzes are designed to simulate actual placement tests.
+              Regular practice will improve your speed, accuracy, and
+              confidence. Start with topics where you need the most improvement.
             </p>
             <Button className="mt-2">Create Custom Quiz</Button>
           </div>
@@ -264,7 +327,9 @@ function Quizzes() {
                 <CheckCircle className="h-6 w-6 text-primary" />
               </div>
               <h3 className="font-semibold mb-1">18 Quizzes</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Completed in the last 30 days</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Completed in the last 30 days
+              </p>
             </div>
           </div>
         </div>
