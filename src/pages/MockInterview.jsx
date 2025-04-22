@@ -1,18 +1,31 @@
 import React from "react";
 import { Button } from "../components/ui/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { BookOpen, Code, Users, Building, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function InterviewCard({ title, description, icon, level, time }) {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleStartInterview = () => {
-    const encodedTitle = encodeURIComponent(title); // Encode the topic for URL safety
-    navigate(`/interview/${encodedTitle}`);
-  };
+    setIsLoading(true);
+    const encodedTitle = encodeURIComponent(title);
 
+    // Simulate API call or navigation delay
+    setTimeout(() => {
+      navigate(`/interview/${encodedTitle}`);
+      setIsLoading(false);
+    }, 1000); // Adjust delay as needed
+  };
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -35,8 +48,41 @@ function InterviewCard({ title, description, icon, level, time }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={handleStartInterview}>
-          Start Interview <ChevronRight className="h-4 w-4 ml-1" />
+        <Button
+          className="w-full group"
+          onClick={handleStartInterview}
+          disabled={isLoading} // Add this state variable to your component
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Starting...
+            </div>
+          ) : (
+            <>
+              Start Interview
+              <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>
@@ -48,8 +94,9 @@ function MockInterview() {
     <div className="container py-10">
       <h1 className="text-3xl font-bold mb-6">Mock Interview Practice</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-3xl">
-        Practice with realistic interview scenarios tailored to your target role. Receive instant feedback and
-        suggestions to improve your performance.
+        Practice with realistic interview scenarios tailored to your target
+        role. Receive instant feedback and suggestions to improve your
+        performance.
       </p>
 
       <Tabs defaultValue="technical" className="w-full">
@@ -57,7 +104,7 @@ function MockInterview() {
           <TabsTrigger value="technical">Technical</TabsTrigger>
           <TabsTrigger value="behavioral">Behavioral</TabsTrigger>
           <TabsTrigger value="hr">HR</TabsTrigger>
-          <TabsTrigger value="industry">Industry-Specific</TabsTrigger>
+          <TabsTrigger value="industry">Specific</TabsTrigger>
         </TabsList>
 
         <TabsContent value="technical" className="space-y-4">
