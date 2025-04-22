@@ -2,7 +2,7 @@
 
 AICareerPrep is a modern, AI-enhanced career preparation platform designed to help students and professionals excel in interviews, build impressive resumes, and explore industry insights — all in one place.
 
-![AICareerPrep Banner](https://www.kindpng.com/picc/m/150-1500375_transparent-interview-png-job-interview-images-cartoon-png.png)
+![AICareerPrep Banner](public/int2.jpg)
 
 
 ## 🚀 Features
@@ -24,6 +24,7 @@ AICareerPrep is a modern, AI-enhanced career preparation platform designed to he
 - **State Management**: React Hooks
 - **Data Handling**: Local state, Firebase (in progress)
 - **Icons**: Lucide-react
+- **Deployment**: Both Netlify & Vite (Dev Server)
 
 ## 📂 Folder Structure
 ```
