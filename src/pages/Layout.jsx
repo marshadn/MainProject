@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Keep only Link
+import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { ModeToggle } from "../components/mode-toggle";
 import {
@@ -11,11 +11,27 @@ import {
   User,
   Menu,
   Bot,
+  Mic,
+  FileSearch,
+  Cpu,
+  Star,
+  TrendingUp,
+  Smartphone,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/Sheet";
-import { useLocation } from "react-router-dom"; // Import useLocation
-import { ThemeProvider } from "../components/ThemeProvider"; // Ensure ThemeProvider is correctly imported
-import "./styles.css"; // Make sure styles.css exists
+import { useLocation } from "react-router-dom";
+import { ThemeProvider } from "../components/ThemeProvider";
+import "./styles.css";
+
+// Create a mapping of paths to their corresponding icons
+const iconMap = {
+  "/": <Home className="h-4 w-4" />,
+  "/mock-interview": <Mic className="h-4 w-4" />,
+  "/resume": <FileSearch className="h-4 w-4" />,
+  "/quizzes": <Cpu className="h-4 w-4" />,
+  "/ask-ai": <MessageSquare className="h-4 w-4" />,
+  "/insights": <TrendingUp className="h-4 w-4" />,
+};
 
 function MobileNavItem({ href, icon, title, onNavigate }) {
   return (
@@ -42,7 +58,7 @@ const navItems = [
 ];
 
 function MainNav() {
-  const location = useLocation(); // Correct useLocation usage
+  const location = useLocation();
 
   return (
     <div className="flex items-center justify-start md:justify-center gap-6 md:gap-10 border-none shadow-none w-full">
@@ -115,10 +131,9 @@ function Footer() {
 }
 
 function HomePage({ children }) {
-  const [isSheetOpen, setIsSheetOpen] = useState(false); // Add useState for managing sheet open state
-  const [isScrolled, setIsScrolled] = useState(false); // Add useState for scroll state
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Function to close mobile menu when navigation occurs
   const handleMobileNavigation = () => {
     setIsSheetOpen(false);
   };
@@ -161,7 +176,7 @@ function HomePage({ children }) {
                         <MobileNavItem
                           key={item.path}
                           href={item.path}
-                          icon={<Home className="h-4 w-4" />}
+                          icon={iconMap[item.path]}
                           title={item.label}
                           onNavigate={handleMobileNavigation}
                         />
