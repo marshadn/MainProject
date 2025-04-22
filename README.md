@@ -1,28 +1,29 @@
-# AI Career Prep
+# 🎯 AICareerPrep - Complete AI-Powered Career Preparation Platform
+
+AICareerPrep is a modern, AI-enhanced career preparation platform designed to help students and professionals excel in interviews, build impressive resumes, and explore industry insights — all in one place.
+
+![AICareerPrep Banner](https://www.kindpng.com/picc/m/150-1500375_transparent-interview-png-job-interview-images-cartoon-png.png)
 
 
+## 🚀 Features
 
-## 🚀 Overview
-The **Mock Interview Platform** is a comprehensive web application designed to help users prepare for job interviews effectively. It provides AI-powered mock interviews, resume analysis, industry insights, and technical quizzes to enhance job readiness.
+- 🤖 **AI Mock Interviews** - Practice with smart, interactive mock interview sessions powered by Google Gemini API.
+- 🧠 **Quiz Generator** - Automatically generate quizzes to sharpen your skills.
+- 📝 **Resume Analyzer & Builder** - Get AI-generated job matches and interview questions based on your resume.
+- 💬 **Ask AI Chatbot** - Ask career-related questions and get real-time AI responses.
+- 📊 **Industry Insights** - Stay informed with AI-curated data on top industries and companies.
 
-## 🔥 Features
-- **Mock Interview Preparation**: Conduct interactive mock interviews with AI-driven feedback.
-- **Resume Build & Analysis**: Upload, analyze, and optimize resumes using AI insights.
-- **Placement-Related Quizzes**: Engage in technical and HR quizzes with performance analysis.
-- **Ask AI Feature**: Use Google's Gemini AI to get career advice and interview tips.
-- **Industry Insights**: Stay updated on real-time hiring trends and skill demand.
-- **Authentication (Planned)**: Secure user authentication for a personalized experience.
 
-## 🛠️ Tech Stack
-### **Frontend**
-- **React.js (JavaScript)** - Fast and efficient UI development
-- **Vite** - Lightweight build tool for better performance
-- **Tailwind CSS** - Modern utility-first styling
+## 🧑‍💻 Tech Stack
 
-### **Backend (Planned)**
-- **Node.js / Firebase** - Backend server or serverless solution
-- **Supabase (PostgreSQL)** - Scalable database solution
-- **Google Gemini API** - AI-powered features for better interaction
+- **Frontend**: React.js + Tailwind CSS + ShadCN UI
+- **Backend/API**: Google Gemini API (via serverless functions)
+- **Validation**: Zod + React Hook Form
+- **Authentication**: Firebase Auth
+- **Routing**: React Router
+- **State Management**: React Hooks
+- **Data Handling**: Local state, Firebase (in progress)
+- **Icons**: Lucide-react
 
 ## 📂 Folder Structure
 ```
@@ -32,16 +33,16 @@ mock-interview-platform/
 │   ├── api/
 │   │   ├── Model.js  # Handles AI-generated interview questions
 │   ├── app/
-│   │   ├── ask-ai/
-│   │   ├── insights/
-│   │   ├── mock-interview/
-│   │   ├── quizzes/
-│   │   ├── resume/
+│   │   ├── AskAi/
+│   │   ├── Insights/
+│   │   ├── MockInterview/
+│   │   ├── Quizzes/
+│   │   ├── Resume/
 │   ├── components/       # Reusable UI components
 │   ├── hooks/            # Custom React hooks
 │   ├── lib/              # Utility functions & services
 │   ├── styles/           # Tailwind CSS configurations
-│   ├── tailwind.config.js  # Tailwind CSS setup
+│   ├── tailwind.config.js  # Tailwind CSS setup [no]
 ├── README.md             # Project documentation
 ```
 
@@ -53,8 +54,8 @@ Ensure you have the following installed:
 
 ### **Installation**
 ```bash
-git clone https://github.com/marshadn/MainProject.git
-cd MainProject 
+git clone https://github.com/marshadn/aicareerprep.git
+cd aicareerprep
 npm install   # or yarn install
 ```
 
@@ -64,19 +65,3 @@ npm run dev   # or yarn dev
 ```
 The app will be available at `http://localhost:5173/`.
 
-## 🔮 Future Enhancements
-- **Full authentication system**
-- **More AI-powered insights**
-- **Live coding interview simulation**
-- **Mobile app version**
-
-## 🤝 Contributing
-Feel free to submit pull requests and contribute to this project!
-
-## 📜 License
-This project is licensed under the MIT License.
-
----
-🚀 **Level up your interview preparation with AI-powered insights!**
-
-## [Demo Site](https://aicareerprep.netlify.app/)
