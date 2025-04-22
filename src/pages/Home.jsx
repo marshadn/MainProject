@@ -324,7 +324,7 @@ function TestimonialsSection() {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-[900px] mx-auto text-white/90 md:text-xl lg:text-base xl:text-xl"
+            className="max-w-[900px] mx-auto text-white/90  mt-4 md:text-xl lg:text-base xl:text-xl"
           >
             Join thousands of candidates who have successfully prepared with our
             platform.
