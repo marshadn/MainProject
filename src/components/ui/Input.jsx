@@ -1,10 +1,10 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
-function Input({ className, type, ...props }) {
+const Input = React.forwardRef(({ className, type, ...props }, ref) => {
   return (
     <input
+      ref={ref} // Forward the ref (this is the proper place for a comment)
       type={type}
       data-slot="input"
       className={cn(
@@ -16,6 +16,9 @@ function Input({ className, type, ...props }) {
       {...props}
     />
   );
-}
+});
+
+// Forwarding the ref to the input element
+Input.displayName = "Input"; // This is optional but helps for debugging
 
 export { Input };

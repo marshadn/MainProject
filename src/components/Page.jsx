@@ -150,7 +150,8 @@ export default function Page() {
     reader.onload = (e) => {
       try {
         const content = e.target?.result;
-        const { resumeData: loadedData, settings: loadedSettings } = JSON.parse(content);
+        const { resumeData: loadedData, settings: loadedSettings } =
+          JSON.parse(content);
         setResumeData(loadedData);
         setSettings(loadedSettings);
         toast({
@@ -180,24 +181,6 @@ export default function Page() {
     <main className="container mx-auto py-6 px-4 md:px-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Resume Builder</h1>
 
-      <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-        <div className="flex flex-wrap gap-2">
-          <Button onClick={handleExportPDF} className="gap-2">
-            <Download className="h-4 w-4" />
-            Download PDF
-          </Button>
-          <Button onClick={saveResumeData} variant="outline" className="gap-2">
-            <Save className="h-4 w-4" />
-            Save Data
-          </Button>
-          <Button onClick={triggerFileInput} variant="outline" className="gap-2">
-            <FileUp className="h-4 w-4" />
-            Load Data
-          </Button>
-          <input type="file" ref={fileInputRef} onChange={loadResumeData} accept=".json" className="hidden" />
-        </div>
-      </div>
-
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="edit">Edit</TabsTrigger>
@@ -224,7 +207,11 @@ export default function Page() {
 
         <TabsContent value="settings">
           <Card className="p-4 md:p-6">
-            <ResumeSettings settings={settings} setSettings={setSettings} resumeData={resumeData} />
+            <ResumeSettings
+              settings={settings}
+              setSettings={setSettings}
+              resumeData={resumeData}
+            />
           </Card>
         </TabsContent>
       </Tabs>
