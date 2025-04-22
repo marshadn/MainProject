@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AskAI from "./pages/AskAI";
@@ -9,21 +10,78 @@ import Layout from "./pages/Layout";
 import ResumePage from "./pages/ResumePage";
 import MyInterview from "./pages/MyInterview";
 import QuizPage from "./pages/QuizPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<HomePage />} />{" "}
-          {/* ✅ Set HomePage as the default route */}
-          <Route path="/ask-ai" element={<AskAI />} /> {/* ✅ Match the URL */}
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/mock-interview" element={<MockInterview />} />
-          <Route path="/quizzes" element={<Quizzes />} />
-          <Route path="/resume" element={<ResumePage />} />
-          <Route path="/interview/:topic" element={<MyInterview />} />
-          <Route path="/quizzes/:topic" element={<QuizPage />} />
+          <Route path="/" element={<HomePage />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/ask-ai"
+            element={
+              <ProtectedRoute>
+                <AskAI />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/insights"
+            element={
+              <ProtectedRoute>
+                <Insights />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mock-interview"
+            element={
+              <ProtectedRoute>
+                <MockInterview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/quizzes"
+            element={
+              <ProtectedRoute>
+                <Quizzes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/resume"
+            element={
+              <ProtectedRoute>
+                <ResumePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/interview/:topic"
+            element={
+              <ProtectedRoute>
+                <MyInterview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/quizzes/:topic"
+            element={
+              <ProtectedRoute>
+                <QuizPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Layout>
     </Router>
