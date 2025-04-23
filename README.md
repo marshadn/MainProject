@@ -1,4 +1,4 @@
-# 🎯 AICareerPrep - Complete AI-Powered Career Preparation Platform
+# 🎯 [AICareerPrep](https://aicareerprepp.netlify.app) - Complete AI-Powered Career Preparation Platform
 
 AICareerPrep is a modern, AI-enhanced career preparation platform designed to help students and professionals excel in interviews, build impressive resumes, and explore industry insights — all in one place.
 
