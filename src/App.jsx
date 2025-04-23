@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AskAI from "./pages/AskAI";
@@ -12,7 +11,7 @@ import MyInterview from "./pages/MyInterview";
 import QuizPage from "./pages/QuizPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
+import ProtectedRoute from "./components/ProtectedRoute"; 
 
 const App = () => {
   return (
@@ -20,8 +19,6 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-
-          {/* Protected Routes */}
           <Route
             path="/ask-ai"
             element={
@@ -78,8 +75,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
-          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
