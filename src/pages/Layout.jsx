@@ -4,33 +4,23 @@ import { Button } from "../components/ui/Button";
 import { ModeToggle } from "../components/mode-toggle";
 import {
   Home,
-  FileText,
-  BrainCircuit,
-  BarChart3,
   MessageSquare,
-  User,
   Menu,
   Bot,
   Mic,
   FileSearch,
   Cpu,
-  Star,
-  TrendingUp,
-  Smartphone,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/Sheet";
 import { useLocation } from "react-router-dom";
 import { ThemeProvider } from "../components/ThemeProvider";
-import "./styles.css";
 
-// Create a mapping of paths to their corresponding icons
 const iconMap = {
   "/": <Home className="h-4 w-4" />,
   "/mock-interview": <Mic className="h-4 w-4" />,
   "/resume": <FileSearch className="h-4 w-4" />,
   "/quizzes": <Cpu className="h-4 w-4" />,
   "/ask-ai": <MessageSquare className="h-4 w-4" />,
-  "/insights": <TrendingUp className="h-4 w-4" />,
 };
 
 function MobileNavItem({ href, icon, title, onNavigate }) {
@@ -54,7 +44,6 @@ const navItems = [
   { path: "/resume", label: "Resume Analyzer" },
   { path: "/quizzes", label: "Quizzes" },
   { path: "/ask-ai", label: "Ask AI" },
-  { path: "/insights", label: "Industry Insights" },
 ];
 
 function MainNav() {
