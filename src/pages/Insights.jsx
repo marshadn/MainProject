@@ -1,8 +1,23 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { AlertCircle, BarChart, TrendingUp, Award, Download, LinkIcon, Building } from "lucide-react";
+import {
+  AlertCircle,
+  BarChart,
+  TrendingUp,
+  Award,
+  Download,
+  LinkIcon,
+  Building,
+} from "lucide-react";
 import {
   BarChart as RechartsBarChart,
   Bar,
@@ -15,7 +30,13 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../components/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../components/ui/Dialog";
 import { Input } from "../components/ui/Input";
 import { generateGeminiResponse } from "../lib/GeminiAI"; // API Call
 
@@ -24,16 +45,15 @@ export default function Insights() {
     <div className="container py-10">
       <h1 className="text-3xl font-bold mb-6">Industry Insights</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-3xl">
-        Stay updated with the latest industry trends, in-demand skills, and hiring patterns. Make data-driven decisions
-        to advance your career.
+        Stay updated with the latest industry trends, in-demand skills, and
+        hiring patterns. Make data-driven decisions to advance your career.
       </p>
 
-      <Tabs defaultValue="trends" className="w-full">
-        <TabsList className="mb-8">
+      <Tabs defaultValue="trends" className="w-full ">
+        <TabsList className=" mb-8 flex justify-center">
           <TabsTrigger value="trends">Market Trends</TabsTrigger>
           <TabsTrigger value="skills">Skills in Demand</TabsTrigger>
           <TabsTrigger value="salary">Salary Insights</TabsTrigger>
-          <TabsTrigger value="companies">Top Companies</TabsTrigger>
         </TabsList>
 
         <TabsContent value="trends">
@@ -41,12 +61,17 @@ export default function Insights() {
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Hiring Trends by Industry (2025)</CardTitle>
-                <CardDescription>Job market growth across major tech sectors</CardDescription>
+                <CardDescription>
+                  Job market growth across major tech sectors
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RechartsBarChart data={hiringTrendsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <RechartsBarChart
+                      data={hiringTrendsData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                    >
                       <XAxis dataKey="industry" />
                       <YAxis />
                       <Tooltip />
@@ -61,14 +86,18 @@ export default function Insights() {
                   <Download className="h-4 w-4" />
                   Download Report
                 </Button>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Source: Industry Analysis, January 2025</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Source: Industry Analysis, January 2025
+                </p>
               </CardFooter>
             </Card>
 
             <Card>
               <CardHeader>
                 <CardTitle>Key Insights</CardTitle>
-                <CardDescription>What's driving the tech job market</CardDescription>
+                <CardDescription>
+                  What's driving the tech job market
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-3">
@@ -76,7 +105,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">AI & Machine Learning Growth</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      27% increase in AI roles, with particular demand in healthcare and finance sectors.
+                      27% increase in AI roles, with particular demand in
+                      healthcare and finance sectors.
                     </p>
                   </div>
                 </div>
@@ -85,7 +115,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Remote Work Transformation</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      65% of tech companies now offer permanent remote or hybrid positions.
+                      65% of tech companies now offer permanent remote or hybrid
+                      positions.
                     </p>
                   </div>
                 </div>
@@ -94,7 +125,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Cybersecurity Skills Gap</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Critical shortage of qualified cybersecurity professionals continues.
+                      Critical shortage of qualified cybersecurity professionals
+                      continues.
                     </p>
                   </div>
                 </div>
@@ -103,7 +135,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Web3 & Blockchain</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Despite market fluctuations, demand for blockchain developers remains strong.
+                      Despite market fluctuations, demand for blockchain
+                      developers remains strong.
                     </p>
                   </div>
                 </div>
@@ -115,14 +148,24 @@ export default function Insights() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <StatCard title="Tech Job Growth" value="12.4%" description="Year-over-year increase" trend="up" />
+            <StatCard
+              title="Tech Job Growth"
+              value="12.4%"
+              description="Year-over-year increase"
+              trend="up"
+            />
             <StatCard
               title="Average Interview Process"
               value="3.2 weeks"
               description="From application to offer"
               trend="down"
             />
-            <StatCard title="Remote Work Positions" value="65%" description="Of new tech job postings" trend="up" />
+            <StatCard
+              title="Remote Work Positions"
+              value="65%"
+              description="Of new tech job postings"
+              trend="up"
+            />
           </div>
 
           <div className="mt-8">
@@ -155,7 +198,9 @@ export default function Insights() {
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>In-Demand Technical Skills (2025)</CardTitle>
-                <CardDescription>Most requested skills in job postings across tech sectors</CardDescription>
+                <CardDescription>
+                  Most requested skills in job postings across tech sectors
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px] w-full">
@@ -168,7 +213,11 @@ export default function Insights() {
                       <XAxis type="number" />
                       <YAxis type="category" dataKey="skill" />
                       <Tooltip />
-                      <Bar dataKey="demand" fill="#4f46e5" name="Demand Score" />
+                      <Bar
+                        dataKey="demand"
+                        fill="#4f46e5"
+                        name="Demand Score"
+                      />
                     </RechartsBarChart>
                   </ResponsiveContainer>
                 </div>
@@ -181,7 +230,9 @@ export default function Insights() {
             <Card>
               <CardHeader>
                 <CardTitle>Soft Skills Breakdown</CardTitle>
-                <CardDescription>Non-technical skills valued by employers</CardDescription>
+                <CardDescription>
+                  Non-technical skills valued by employers
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[250px] w-full">
@@ -194,10 +245,15 @@ export default function Insights() {
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name} ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {softSkillsData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip />
@@ -248,8 +304,9 @@ export default function Insights() {
               <div className="md:w-2/3">
                 <h2 className="text-xl font-bold mb-3">Skill Gap Analysis</h2>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">
-                  Compare your skills against current market demands. Our AI analysis will identify your strongest areas
-                  and opportunities for growth based on real job market data.
+                  Compare your skills against current market demands. Our AI
+                  analysis will identify your strongest areas and opportunities
+                  for growth based on real job market data.
                 </p>
                 <Button className="mt-2">Analyze My Skills</Button>
               </div>
@@ -266,16 +323,25 @@ export default function Insights() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <Card className="lg:col-span-2">
               <CardHeader>
-                <CardTitle>Salary Ranges by Experience (Software Engineering)</CardTitle>
-                <CardDescription>Average annual compensation in USD, based on experience level</CardDescription>
+                <CardTitle>
+                  Salary Ranges by Experience (Software Engineering)
+                </CardTitle>
+                <CardDescription>
+                  Average annual compensation in USD, based on experience level
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RechartsBarChart data={salaryRangeData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <RechartsBarChart
+                      data={salaryRangeData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                    >
                       <XAxis dataKey="level" />
                       <YAxis />
-                      <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                      <Tooltip
+                        formatter={(value) => `$${value.toLocaleString()}`}
+                      />
                       <Legend />
                       <Bar dataKey="min" fill="#818cf8" name="Minimum" />
                       <Bar dataKey="max" fill="#4f46e5" name="Maximum" />
@@ -285,7 +351,8 @@ export default function Insights() {
               </CardContent>
               <CardFooter>
                 <p className="text-xs text-gray-500 dark:text-gray-400 w-full text-center">
-                  Data sourced from industry surveys and job postings as of March 2025
+                  Data sourced from industry surveys and job postings as of
+                  March 2025
                 </p>
               </CardFooter>
             </Card>
@@ -293,7 +360,9 @@ export default function Insights() {
             <Card>
               <CardHeader>
                 <CardTitle>Negotiation Tips</CardTitle>
-                <CardDescription>How to secure the best compensation package</CardDescription>
+                <CardDescription>
+                  How to secure the best compensation package
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-3">
@@ -303,7 +372,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Research Thoroughly</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Know the salary range for your role, location, and experience level.
+                      Know the salary range for your role, location, and
+                      experience level.
                     </p>
                   </div>
                 </div>
@@ -314,7 +384,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Highlight Value</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Clearly articulate how your skills will benefit the company.
+                      Clearly articulate how your skills will benefit the
+                      company.
                     </p>
                   </div>
                 </div>
@@ -325,7 +396,8 @@ export default function Insights() {
                   <div>
                     <p className="font-medium">Consider the Full Package</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Evaluate benefits, stock options, work-life balance, and growth opportunities.
+                      Evaluate benefits, stock options, work-life balance, and
+                      growth opportunities.
                     </p>
                   </div>
                 </div>
@@ -339,20 +411,42 @@ export default function Insights() {
           <div className="mt-8">
             <h2 className="text-2xl font-bold mb-4">Salary Insights by Role</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <SalaryCard role="Software Engineer" median="$120,000" range="$90,000 - $160,000" growth="+8% YoY" />
-              <SalaryCard role="Data Scientist" median="$135,000" range="$110,000 - $180,000" growth="+12% YoY" />
-              <SalaryCard role="DevOps Engineer" median="$125,000" range="$100,000 - $165,000" growth="+10% YoY" />
-              <SalaryCard role="Product Manager" median="$140,000" range="$115,000 - $190,000" growth="+7% YoY" />
+              <SalaryCard
+                role="Software Engineer"
+                median="$120,000"
+                range="$90,000 - $160,000"
+                growth="+8% YoY"
+              />
+              <SalaryCard
+                role="Data Scientist"
+                median="$135,000"
+                range="$110,000 - $180,000"
+                growth="+12% YoY"
+              />
+              <SalaryCard
+                role="DevOps Engineer"
+                median="$125,000"
+                range="$100,000 - $165,000"
+                growth="+10% YoY"
+              />
+              <SalaryCard
+                role="Product Manager"
+                median="$140,000"
+                range="$115,000 - $190,000"
+                growth="+7% YoY"
+              />
             </div>
           </div>
 
           <div className="mt-8 p-6 bg-primary text-white rounded-lg">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="md:w-2/3">
-                <h2 className="text-xl font-bold mb-3">Personalized Salary Calculator</h2>
+                <h2 className="text-xl font-bold mb-3">
+                  Personalized Salary Calculator
+                </h2>
                 <p className="text-primary-foreground mb-4">
-                  Get an accurate salary estimate based on your skills, experience, location, and current market
-                  conditions.
+                  Get an accurate salary estimate based on your skills,
+                  experience, location, and current market conditions.
                 </p>
                 <Button variant="secondary" className="mt-2">
                   Calculate Your Worth
@@ -361,131 +455,6 @@ export default function Insights() {
               <div className="md:w-1/3 flex justify-center">
                 <div className="h-32 w-32 rounded-full bg-white/10 flex items-center justify-center">
                   <BarChart className="h-16 w-16 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="companies">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Top Hiring Companies</h2>
-              <div className="space-y-4">
-                <CompanyCard
-                  name="TechInnovate Inc."
-                  industry="Software & Cloud Services"
-                  openings={120}
-                  rating={4.7}
-                  growth="Rapid growth"
-                />
-                <CompanyCard
-                  name="DataSphere Analytics"
-                  industry="Data & AI"
-                  openings={85}
-                  rating={4.5}
-                  growth="Established leader"
-                />
-                <CompanyCard
-                  name="NextGen Health Tech"
-                  industry="Healthcare Technology"
-                  openings={65}
-                  rating={4.3}
-                  growth="Expanding"
-                />
-                <CompanyCard
-                  name="SecureNet Systems"
-                  industry="Cybersecurity"
-                  openings={40}
-                  rating={4.6}
-                  growth="Fast-growing"
-                />
-                <CompanyCard
-                  name="Quantum Finance"
-                  industry="Fintech"
-                  openings={55}
-                  rating={4.2}
-                  growth="Stable growth"
-                />
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Emerging Startups to Watch</h2>
-              <div className="space-y-4">
-                <StartupCard
-                  name="AI Copilot"
-                  focus="AI productivity tools"
-                  funding="$25M Series A"
-                  founded="2023"
-                  location="San Francisco, CA"
-                />
-                <StartupCard
-                  name="BlockSecure"
-                  focus="Blockchain security"
-                  funding="$12M Seed"
-                  founded="2024"
-                  location="Austin, TX"
-                />
-                <StartupCard
-                  name="HealthSync"
-                  focus="Healthcare data interoperability"
-                  funding="$18M Series A"
-                  founded="2023"
-                  location="Boston, MA"
-                />
-                <StartupCard
-                  name="EcoTech Solutions"
-                  focus="Sustainable technology"
-                  funding="$15M Series A"
-                  founded="2022"
-                  location="Seattle, WA"
-                />
-                <StartupCard
-                  name="EdTech Innovators"
-                  focus="AI-powered education"
-                  funding="$10M Seed"
-                  founded="2024"
-                  location="New York, NY"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Company Culture & Benefits Trends</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <TrendCard
-                title="Flexible Work Arrangements"
-                description="85% of top tech companies now offer permanent flexible work options, including remote, hybrid, and 4-day workweek pilots."
-                icon={<TrendingUp className="h-5 w-5" />}
-              />
-              <TrendCard
-                title="Mental Health Benefits"
-                description="Comprehensive mental health support is becoming standard, with 72% of companies expanding their wellness programs."
-                icon={<TrendingUp className="h-5 w-5" />}
-              />
-              <TrendCard
-                title="Continuous Learning"
-                description="Companies are investing more in employee development, with average education stipends increasing by 35% since 2023."
-                icon={<TrendingUp className="h-5 w-5" />}
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="md:w-2/3">
-                <h2 className="text-xl font-bold mb-3">Company Research Tool</h2>
-                <p className="text-gray-500 dark:text-gray-400 mb-4">
-                  Get comprehensive insights on any company, including culture, interview process, and compensation
-                  details from real employees.
-                </p>
-                <Button className="mt-2">Research Companies</Button>
-              </div>
-              <div className="md:w-1/3 flex justify-center">
-                <div className="h-32 w-32 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Building className="h-16 w-16 text-primary" />
                 </div>
               </div>
             </div>
@@ -529,7 +498,9 @@ function NewsCard({ title, summary, source, date }) {
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{summary}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          {summary}
+        </p>
         <div className="flex justify-between items-center text-xs">
           <span className="font-medium">{source}</span>
           <span className="text-gray-500 dark:text-gray-400">{date}</span>
@@ -583,7 +554,9 @@ function SalaryCard({ role, median, range, growth }) {
       <CardContent>
         <div className="space-y-2">
           <div>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Median Salary</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
+              Median Salary
+            </p>
             <p className="text-2xl font-bold">{median}</p>
           </div>
           <div>
@@ -595,88 +568,6 @@ function SalaryCard({ role, median, range, growth }) {
             <span className="text-green-500 font-medium">{growth}</span>
           </div>
         </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-function CompanyCard({ name, industry, openings, rating, growth }) {
-  return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{name}</CardTitle>
-        <CardDescription>{industry}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-3 gap-2 text-sm">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Open Positions</p>
-            <p className="font-medium">{openings}+</p>
-          </div>
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Rating</p>
-            <p className="font-medium flex items-center gap-1">
-              {rating} <Award className="h-3 w-3 text-yellow-500" />
-            </p>
-          </div>
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Status</p>
-            <p className="font-medium">{growth}</p>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          View Jobs
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function StartupCard({ name, focus, funding, founded, location }) {
-  return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{name}</CardTitle>
-        <CardDescription>{focus}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-3 gap-2 text-sm">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Funding</p>
-            <p className="font-medium">{funding}</p>
-          </div>
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Founded</p>
-            <p className="font-medium">{founded}</p>
-          </div>
-          <div>
-            <p className="text-gray-500 dark:text-gray-400">Location</p>
-            <p className="font-medium">{location}</p>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          Company Profile
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function TrendCard({ title, description, icon }) {
-  return (
-    <Card>
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base">{title}</CardTitle>
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">{icon}</div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
       </CardContent>
     </Card>
   );
@@ -713,11 +604,18 @@ const softSkillsData = [
   { name: "Time Management", value: 4 },
 ];
 
-const COLORS = ["#4f46e5", "#818cf8", "#c4b5fd", "#ddd6fe", "#ede9fe", "#f5f3ff"];
+const COLORS = [
+  "#4f46e5",
+  "#818cf8",
+  "#c4b5fd",
+  "#ddd6fe",
+  "#ede9fe",
+  "#f5f3ff",
+];
 
 const salaryRangeData = [
   { level: "Junior (0-2 yrs)", min: 80000, max: 120000 },
   { level: "Mid (3-5 yrs)", min: 110000, max: 160000 },
   { level: "Senior (6-9 yrs)", min: 140000, max: 210000 },
   { level: "Lead (10+ yrs)", min: 180000, max: 280000 },
-]
+];
