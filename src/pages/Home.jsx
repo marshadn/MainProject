@@ -8,12 +8,6 @@ import {
   BarChart3,
   MessageSquare,
   Plus,
-  Mic,
-  FileSearch,
-  Cpu,
-  Star,
-  TrendingUp,
-  Smartphone,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -26,17 +20,29 @@ const images = [
   "/int5.svg",
   "/int6.svg",
 ];
+
 export default function Home() {
   const words = ["confidently.", "effortlessly.", "like a pro."];
   const [index, setIndex] = useState(0);
   const [indexx, setIndexx] = useState(0);
+  const [currentText, setCurrentText] = useState(
+    "Comprehensive Interview Preparation"
+  );
+  const textArray = [
+    "Comprehensive Interview Preparation",
+    "Personalized Mock Interviews",
+    "Resume Analyzer & Builder",
+    "Real-Time Industry Insights",
+    "AI-Powered Career Advice",
+    "Skills Assessment and Development",
+  ];
+
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // Parallax effects
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "200%"]);
 
@@ -49,9 +55,17 @@ export default function Home() {
       setIndexx((prevIndexx) => (prevIndexx + 1) % images.length);
     }, 5000);
 
+    const textInterval = setInterval(() => {
+      setCurrentText((prevText) => {
+        const nextIndex = (textArray.indexOf(prevText) + 1) % textArray.length;
+        return textArray[nextIndex];
+      });
+    }, 3000);
+
     return () => {
       clearInterval(wordInterval);
       clearInterval(imageInterval);
+      clearInterval(textInterval);
     };
   }, []);
 
@@ -64,12 +78,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
-      {/* Hero Section with Parallax */}
       <section
         ref={ref}
         className="relative w-full h-screen py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 overflow-hidden"
       >
-        {/* Parallax background elements */}
         <motion.div
           className="absolute inset-0 z-0"
           style={{
@@ -173,8 +185,8 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.svg')] bg-[length:80px_80px] opacity-5 dark:opacity-10"></div>
         </div>
 
-        <div className="container px-4 md:px-6">
-          <div className="text-center space-y-2">
+        <div className="container px-20 md:px-16">
+          <div className="text-center space-y-3">
             <motion.h2
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -182,8 +194,8 @@ export default function Home() {
               viewport={{ once: true, amount: 0.3 }}
               className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary"
             >
-              Comprehensive Interview Preparation
-            </motion.h2>
+              {currentText}
+            </motion.h2>{" "}
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -209,7 +221,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Showcase Section (Replacing Testimonials) */}
+      {/* Features Showcase Section  */}
       <FeaturesShowcase />
     </div>
   );
@@ -220,31 +232,34 @@ function FeatureCard({ icon, title, description, link, delay = 0 }) {
   return (
     <Link to={link} className="block">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 0.5, ease: "easeOut" }}
+        transition={{ delay, duration: 0.6, ease: "easeOut" }}
         viewport={{ once: true }}
-        whileHover={{ y: -5, scale: 1.02 }}
-        className="flex flex-col items-center rounded-lg border bg-lightCard dark:bg-darkCard p-6 text-center shadow-sm hover:shadow-lg transition-all dark:border-gray-800 group"
+        whileHover={{ y: -6, scale: 1.03 }}
+        className="group relative flex flex-col items-center rounded-2xl border-2 border-transparent p-8 text-center shadow-md hover:shadow-xl transition-all duration-300 ease-in-out"
       >
         <motion.div
           whileHover={{ scale: 1.1 }}
-          className="h-20 w-20 flex items-center justify-center bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors"
+          className="h-16 w-16 mb-4 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-full transition-colors"
         >
           {icon}
         </motion.div>
-        <h3 className="mt-4 text-xl font-semibold text-lightText dark:text-darkText">
+
+        <h3 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
           {title}
         </h3>
-        <p className="mt-2 text-sm text-lightSecondary dark:text-darkSecondary">
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           {description}
         </p>
+
+        {/* Running border effect */}
+        <div className="absolute inset-0 rounded-2xl border-2 border-primary animate-running-border"></div>
       </motion.div>
     </Link>
   );
 }
-
-// Features Showcase Section (Replacing Testimonials)
+// Features Showcase Section
 function FeaturesShowcase() {
   const showcaseRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -319,8 +334,8 @@ function FeaturesShowcase() {
             viewport={{ once: true }}
             className="max-w-[900px] mx-auto text-white/90  mt-4 md:text-xl lg:text-base xl:text-xl"
           >
-            Join thousands of candidates who have successfully prepared with our
-            platform.
+            Accelerate your career journey with the platform future
+            professionals trust
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -408,7 +423,7 @@ const features = [
     icon: <Plus className="h-10 w-10 text-primary" />,
     title: "More Coming Soon",
     description: "We're constantly adding new features to help you succeed",
-    link: "/insights",
+    link: "/more",
   },
 ];
 
