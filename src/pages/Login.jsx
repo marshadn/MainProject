@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
@@ -12,9 +11,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Simulating login without Firebase to debug
       console.log("Logging in with", email, password);
-      navigate("/"); // Redirect to HomePage after successful login
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -67,7 +65,7 @@ const Login = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                className="h-4 w-4 text-primary focus:ring-indigo-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember-me"
@@ -78,7 +76,7 @@ const Login = () => {
             </div>
             <button
               type="button"
-              className="text-sm text-indigo-600 hover:text-indigo-800"
+              className="text-sm text-primary hover:text-indigo-800"
               onClick={() => navigate("/forgot-password")}
             >
               Forgot password?
@@ -87,7 +85,7 @@ const Login = () => {
           <div className="pt-2">
             <Button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
             >
               Sign in
             </Button>
@@ -99,7 +97,7 @@ const Login = () => {
             Don't have an account?{" "}
             <button
               onClick={() => navigate("/register")}
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
+              className="text-primary hover:text-indigo-800 font-medium"
             >
               Sign up
             </button>

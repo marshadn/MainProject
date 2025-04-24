@@ -1,4 +1,3 @@
-// src/pages/Register.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -16,7 +15,7 @@ const Register = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login"); // Redirect to login after successful registration
+      navigate("/login");
     } catch (err) {
       setError("Registration failed. Please try again.");
     }
@@ -68,7 +67,7 @@ const Register = () => {
           <div className="pt-2">
             <Button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
             >
               Sign up
             </Button>
@@ -80,7 +79,7 @@ const Register = () => {
             Already have an account?{" "}
             <button
               onClick={() => navigate("/login")}
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
+              className="text-primary hover:text-indigo-800 font-medium"
             >
               Sign in
             </button>
