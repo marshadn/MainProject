@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Button } from "../components/ui/Button";
 
 const Login = () => {
@@ -10,11 +11,13 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const auth = getAuth();
+
     try {
-      console.log("Logging in with", email, password);
-      navigate("/");
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/"); // Redirect to home or wherever after successful login
     } catch (err) {
-      setError(err.message);
+      setError("Login failed. Please check your credentials.");
     }
   };
 
